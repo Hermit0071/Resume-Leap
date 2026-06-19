@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>升学简历生成器</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-card">
+          <p class="eyebrow">HKU Activity Resume Studio</p>
+          <h1>升学简历生成器</h1>
+          <p class="intro">
+            适合高中生申请港大活动、夏校、竞赛与营队。你可以自由填写内容、切换风格，并导出
+            PDF、DOCX、PNG。
+          </p>
+        </div>
+
+        <section class="panel">
+          <div class="section-head">
+            <h2>模板风格</h2>
+            <span>3 套预设</span>
+          </div>
+          <div class="template-grid" id="templateGrid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <h2>外观微调</h2>
+            <span>可自定义</span>
+          </div>
+          <label class="field">
+            <span>主题色</span>
+            <input id="accentInput" type="color" value="#1f4e79" />
+          </label>
+          <label class="field">
+            <span>字体大小</span>
+            <input id="fontScaleInput" type="range" min="0.9" max="1.2" step="0.05" value="1" />
+          </label>
+          <label class="field">
+            <span>排版密度</span>
+            <select id="densityInput">
+              <option value="airy">舒展</option>
+              <option value="balanced" selected>平衡</option>
+              <option value="compact">紧凑</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <h2>导出文件</h2>
+            <span>本地生成</span>
+          </div>
+          <div class="action-group">
+            <button class="primary" data-export="pdf">导出 PDF</button>
+            <button data-export="docx">导出 DOCX</button>
+            <button data-export="png">导出 PNG</button>
+          </div>
+          <p class="helper" id="exportStatus">填写完成后即可导出。</p>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <section class="editor panel">
+          <div class="section-head">
+            <h2>基本信息</h2>
+            <span>自行填写</span>
+          </div>
+          <div class="form-grid">
+            <label class="field">
+              <span>姓名</span>
+              <input id="nameInput" type="text" />
+            </label>
+            <label class="field">
+              <span>身份标签</span>
+              <input id="taglineInput" type="text" />
+            </label>
+            <label class="field">
+              <span>学校</span>
+              <input id="schoolInput" type="text" />
+            </label>
+            <label class="field">
+              <span>邮箱</span>
+              <input id="emailInput" type="text" />
+            </label>
+            <label class="field">
+              <span>电话</span>
+              <input id="phoneInput" type="text" />
+            </label>
+            <label class="field">
+              <span>地区</span>
+              <input id="locationInput" type="text" />
+            </label>
+            <label class="field full">
+              <span>个人主页 / 作品集 / 微信号</span>
+              <input id="websiteInput" type="text" />
+            </label>
+          </div>
+        </section>
+
+        <section class="editor panel">
+          <div class="section-head">
+            <h2>简历板块</h2>
+            <span>支持改名、增删、排序</span>
+          </div>
+          <div class="toolbar">
+            <button id="addListSection">新增列表板块</button>
+            <button id="addTextSection">新增文本板块</button>
+            <button id="resetButton" class="ghost">恢复示例内容</button>
+          </div>
+          <div id="sectionsEditor" class="sections-editor"></div>
+        </section>
+
+        <section class="preview">
+          <div class="preview-top">
+            <h2>实时预览</h2>
+            <p>所见即所得，导出文件会沿用当前内容与风格。</p>
+          </div>
+          <div id="resumePreview" class="resume-preview"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="sectionCardTemplate">
+      <article class="section-card"></article>
+    </template>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
