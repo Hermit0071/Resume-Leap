@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>简跃 · 简历生成器</title>
+    <link rel="stylesheet" href="./web/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-lockup">
+        <div class="brand-mark">J</div>
+        <div>
+          <h1>简跃</h1>
+          <p data-i18n="brandSubtitle">填写、排版并导出 PDF、DOCX、PNG。</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <nav class="main-nav" aria-label="主导航" data-i18n-aria-label="mainNavigation">
+          <button class="nav-button active" data-page="create" data-i18n="createResume">创建简历</button>
+          <button class="nav-button" data-page="mine"><span data-i18n="myResumes">我的简历</span> <span id="historyNavCount">0</span></button>
+        </nav>
+        <button id="languageToggle" class="language-toggle" type="button" aria-label="Switch to English">English</button>
+      </div>
+    </header>
+
+    <section id="createPage" class="app-page active">
+      <div class="app-shell">
+        <aside class="sidebar">
+          <section class="panel">
+            <div class="section-head"><h2 data-i18n="templateStyle">模板风格</h2><span data-i18n="threePresets">3 套预设</span></div>
+            <div class="template-grid" id="templateGrid"></div>
+          </section>
+
+          <section class="panel">
+            <div class="section-head"><h2 data-i18n="appearance">外观微调</h2><span data-i18n="customizable">可自定义</span></div>
+            <label class="field"><span data-i18n="accentColor">主题色</span><input id="accentInput" type="color" value="#1f4e79" /></label>
+            <label class="field"><span data-i18n="fontSize">字体大小</span><input id="fontScaleInput" type="range" min="0.9" max="1.2" step="0.05" value="1" /></label>
+            <label class="field">
+              <span data-i18n="layoutDensity">排版密度</span>
+              <select id="densityInput">
+                <option value="airy" data-i18n="airy">舒展</option>
+                <option value="balanced" selected data-i18n="balanced">平衡</option>
+                <option value="compact" data-i18n="compact">紧凑</option>
+              </select>
+            </label>
+          </section>
+
+          <section class="panel">
+            <div class="section-head"><h2 data-i18n="exportFiles">导出文件</h2><span data-i18n="fullyOffline">完全离线</span></div>
+            <div class="action-group">
+              <button class="primary" data-export="pdf"><span data-i18n="export">导出</span> PDF</button>
+              <button data-export="docx"><span data-i18n="export">导出</span> DOCX</button>
+              <button data-export="png"><span data-i18n="export">导出</span> PNG</button>
+            </div>
+            <p class="helper" id="exportStatus" data-i18n="exportHelp">PDF 会打开系统打印窗口，请选择“存储为 PDF”。</p>
+          </section>
+        </aside>
+
+        <main class="workspace">
+          <div class="editor-column">
+            <section class="editor panel">
+              <div class="section-head"><h2 data-i18n="basicInfo">基本信息</h2><span data-i18n="fillYourself">自行填写</span></div>
+              <div class="form-grid">
+                <label class="field"><span data-i18n="name">姓名</span><input id="nameInput" type="text" /></label>
+                <label class="field"><span data-i18n="tagline">身份标签</span><input id="taglineInput" type="text" /></label>
+                <label class="field"><span data-i18n="school">学校</span><input id="schoolInput" type="text" /></label>
+                <label class="field"><span data-i18n="email">邮箱</span><input id="emailInput" type="text" /></label>
+                <label class="field"><span data-i18n="phone">电话</span><input id="phoneInput" type="text" /></label>
+                <label class="field"><span data-i18n="location">地区</span><input id="locationInput" type="text" /></label>
+                <label class="field full"><span data-i18n="website">个人主页 / 作品集 / 微信号</span><input id="websiteInput" type="text" /></label>
+              </div>
+            </section>
+
+            <section class="editor panel preset-panel">
+              <div class="section-head"><h2 data-i18n="sectionLibrary">板块库</h2><span data-i18n="addAsNeeded">按需添加</span></div>
+              <div id="presetSectionsGrid" class="preset-section-grid"></div>
+            </section>
+
+            <section class="editor panel">
+              <div class="section-head"><h2 data-i18n="resumeSections">简历板块</h2><span data-i18n="sectionActions">支持改名、增删、排序</span></div>
+              <div class="toolbar">
+                <button id="addListSection" data-i18n="addListSection">新增列表板块</button>
+                <button id="addTextSection" data-i18n="addTextSection">新增文本板块</button>
+              </div>
+              <div id="sectionsEditor" class="sections-editor"></div>
+            </section>
+          </div>
+
+          <section class="preview">
+            <div class="preview-top"><h2 data-i18n="livePreview">实时预览</h2><p data-i18n="liveUpdate">输入内容时同步更新</p></div>
+            <div id="resumePreview" class="resume-preview"></div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section id="minePage" class="app-page">
+      <div class="mine-shell">
+        <div class="mine-hero">
+          <div>
+            <p class="eyebrow">LOCAL ARCHIVE</p>
+            <h2 data-i18n="myResumes">我的简历</h2>
+            <p data-i18n="historyIntro">所有历史版本都保存在当前浏览器中，可随时继续编辑。</p>
+          </div>
+          <div class="mine-actions">
+            <button id="newResumeButton" class="primary" data-i18n="newBlankResume">新建空白简历</button>
+            <button id="saveCopyButton" data-i18n="saveAsCopy">将当前简历另存为副本</button>
+          </div>
+        </div>
+        <div class="mine-summary">
+          <strong id="historyCount">0 份简历</strong>
+          <span id="saveStatus" data-i18n="autoSaveHelp">填写后自动保存。</span>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </div>
+    </section>
+
+    <template id="sectionCardTemplate"><article class="section-card"></article></template>
+    <script src="./vendor/docx.iife.js"></script>
+    <script src="./web/app.js"></script>
+  </body>
+</html>
